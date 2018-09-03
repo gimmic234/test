@@ -945,7 +945,7 @@ window.cytubeEnhanced.addModule('additionalChatCommands', function (app, setting
 					if (window.CLIENT.rank >= 2 && vidSrc.indexOf('youtube.com') == -1) {
 						let text = msg.split(" ");
 						window.socket.emit("chatMsg", {msg: "we are starting in", meta: meta});
-						let counter = (text.length > 1) ? (isNaN(text[1]) ? text[1] : 10) : 10;
+						let counter = (text.length > 1) ? (isNaN(text[1]) ? 10 : text[1]) : 10;
 						counter = (counter > 20) ? 20 : counter;
 						var interval = setInterval(function() {
 								window.socket.emit("chatMsg", {msg: counter + "..."});
