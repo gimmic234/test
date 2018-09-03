@@ -940,15 +940,19 @@ window.cytubeEnhanced.addModule('additionalChatCommands', function (app, setting
 
                     IS_COMMAND = false;
                 } else if (msg.indexOf("/countdown") > -1){
-					let text = msg.val().split(" ");
-					window.socket.emit("chatMsg", {msg: "countdown start"});
+					let text = msg.split(" ");
+					window.socket.emit("chatMsg", {msg: "initiating the countdown", meta: meta});
 					let counter = (text.length > 1) ? text[1] : 10;
 					var interval = setInterval(function() {
 							window.socket.emit("chatMsg", {msg: counter + "..."});
 							counter--;
-							if (counter == -1) {
+							if (counter == 0) {
+								window.socket.emit("chatMsg", {msg: "start!"});
 								clearInterval(interval);
-								videojs("ytapiplayer").play();
+								let vid = videojs("ytapiplayer");
+								if (typeof vid.play() !== 'undefined' && $.isFunction(vid.play()))  {
+									videojs("ytapiplayer").play();
+								}
 							}
 						}, 1000);
 				} else {
