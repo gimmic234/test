@@ -944,6 +944,7 @@ window.cytubeEnhanced.addModule('additionalChatCommands', function (app, setting
 					let counter = 10;
 					var interval = setInterval(function() {
 							window.socket.emit("chatMsg", {msg: counter + "..."});
+							counter--;
 							if (counter == -1) {
 								clearInterval(interval);
 								videojs("ytapiplayer").play();
