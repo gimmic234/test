@@ -940,7 +940,7 @@ window.cytubeEnhanced.addModule('additionalChatCommands', function (app, setting
 
                     IS_COMMAND = false;
                 } else if (msg.indexOf("/countdown") > -1){
-					let text = chat.val().split(" ");
+					let text = msg.val().split(" ");
 					window.socket.emit("chatMsg", {msg: "countdown start"});
 					let counter = (text.length > 1) ? text[1] : 10;
 					var interval = setInterval(function() {
