@@ -951,7 +951,7 @@ window.cytubeEnhanced.addModule('additionalChatCommands', function (app, setting
 									window.socket.emit("chatMsg", {msg: "start!"});
 									clearInterval(interval);
 									let vidHost = $('#videowrap').find('video');
-									if (vidHost.attr('src').indexOf('youtube') > -1)  {
+									if (vidHost.attr('src').indexOf('youtube') == -1)  {
 										let vid = videojs("ytapiplayer");
 										videojs("ytapiplayer").play();
 									}
