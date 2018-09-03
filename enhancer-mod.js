@@ -940,21 +940,24 @@ window.cytubeEnhanced.addModule('additionalChatCommands', function (app, setting
 
                     IS_COMMAND = false;
                 } else if (msg.indexOf("/countdown") > -1){
-					let text = msg.split(" ");
-					window.socket.emit("chatMsg", {msg: "initiating the countdown", meta: meta});
-					let counter = (text.length > 1) ? text[1] : 10;
-					var interval = setInterval(function() {
-							window.socket.emit("chatMsg", {msg: counter + "..."});
-							counter--;
-							if (counter == 0) {
-								window.socket.emit("chatMsg", {msg: "start!"});
-								clearInterval(interval);
-								let vid = videojs("ytapiplayer");
-								if (typeof vid.play() !== 'undefined' && $.isFunction(vid.play()))  {
-									videojs("ytapiplayer").play();
+					if (window.CLIENT.rank >= 2) {
+						let text = msg.split(" ");
+						window.socket.emit("chatMsg", {msg: "we are starting in", meta: meta});
+						let counter = (text.length > 1) ? text[1] : 10;
+						var interval = setInterval(function() {
+								window.socket.emit("chatMsg", {msg: counter + "..."});
+								counter--;
+								if (counter == 0) {
+									window.socket.emit("chatMsg", {msg: "start!"});
+									clearInterval(interval);
+									let vidHost = $('#videowrap').find('video');
+									if (vidHost.attr('src').indexOf('youtube') > -1)  {
+										let vid = videojs("ytapiplayer");
+										videojs("ytapiplayer").play();
+									}
 								}
-							}
-						}, 1000);
+							}, 1000);
+					}
 				} else {
                     window.socket.emit("chatMsg", {msg: msg, meta: meta});
                 }
