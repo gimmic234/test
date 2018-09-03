@@ -940,21 +940,21 @@ window.cytubeEnhanced.addModule('additionalChatCommands', function (app, setting
 
                     IS_COMMAND = false;
                 } else if (msg.indexOf("/countdown") > -1){
-					if (window.CLIENT.rank >= 2) {
+					let vid = $('#ytapiplayer');
+					let vidSrc = (vid.attr('src')) ? vid.attr('src') : vid.find('video').attr('src');
+					if (window.CLIENT.rank >= 2 && vidSrc.indexOf('youtube.com') == -1) {
 						let text = msg.split(" ");
 						window.socket.emit("chatMsg", {msg: "we are starting in", meta: meta});
-						let counter = (text.length > 1) ? text[1] : 10;
+						let counter = (text.length > 1) ? ((text[1].isInteger) ? text[1] : 10) : 10;
+						counter = (counter > 20) ? 20 : counter;
 						var interval = setInterval(function() {
 								window.socket.emit("chatMsg", {msg: counter + "..."});
 								counter--;
 								if (counter == 0) {
 									window.socket.emit("chatMsg", {msg: "start!"});
 									clearInterval(interval);
-									let vidHost = $('#videowrap').find('video');
-									if (vidHost.attr('src').indexOf('youtube') == -1)  {
-										let vid = videojs("ytapiplayer");
-										videojs("ytapiplayer").play();
-									}
+									let vid = videojs("ytapiplayer");
+									videojs("ytapiplayer").play();
 								}
 							}, 1000);
 					}
