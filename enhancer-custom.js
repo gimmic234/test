@@ -939,9 +939,10 @@ window.cytubeEnhanced.addModule('additionalChatCommands', function (app, setting
                     window.socket.emit("chatMsg", {msg: 'billbot: ' + msgForCommand});
 
                     IS_COMMAND = false;
-                } else if (msg == "/countdown") {
+                } else if (msg.indexOf("/countdown") > -1){
+					let text = chat.val().split(" ");
 					window.socket.emit("chatMsg", {msg: "countdown start"});
-					let counter = 10;
+					let counter = (text.length > 1) ? text[1] : 10;
 					var interval = setInterval(function() {
 							window.socket.emit("chatMsg", {msg: counter + "..."});
 							counter--;
